@@ -42,7 +42,7 @@ export function registerWhoami(program: Command): void {
 
         lines.push(`${symbols.person} Profile:     ${bold(profileName)}`);
         lines.push(`${symbols.email} Email:       ${localEmail || profile.gitEmail}`);
-        lines.push(`\u{1F4DD} Name:        ${localName || profile.gitName}`);
+        lines.push(`${symbols.name} Name:        ${localName || profile.gitName}`);
         lines.push(
           `${symbols.key} SSH key:     ${tildify(profile.sshKeyPath || "none")} (${keyStatus})`,
         );
@@ -51,7 +51,7 @@ export function registerWhoami(program: Command): void {
       } else {
         lines.push(`${symbols.person} Profile:     ${warn("none — run gitme init")}`);
         lines.push(`${symbols.email} Email:       ${localEmail || "not set"}`);
-        lines.push(`\u{1F4DD} Name:        ${localName || "not set"}`);
+        lines.push(`${symbols.name} Name:        ${localName || "not set"}`);
         lines.push(`${symbols.link} Remote:      ${remote}`);
       }
 

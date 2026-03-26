@@ -16,6 +16,7 @@ export const symbols = {
   branch: "⎇",
   search: "⊙",
   clipboard: "❐",
+  name: "≡",
 };
 
 // Color helpers
