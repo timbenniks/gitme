@@ -33,7 +33,7 @@ Set up once, then forget about it.
 ## Install
 
 ```bash
-npm install -g gitme
+npm install -g @timbenniks/gitme
 ```
 
 Requires Node.js 18+. Only depends on `git` and `ssh-keygen` (universally available).

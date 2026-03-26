@@ -1,5 +1,5 @@
 {
-  "name": "gitme",
+  "name": "@timbenniks/gitme",
   "version": "0.1.0",
   "description": "Multi-account GitHub CLI — manage SSH keys, git identities, and GitHub auth per repo",
   "keywords": [
