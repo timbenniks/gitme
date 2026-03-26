@@ -1,21 +1,21 @@
 import pc from "picocolors";
 
-// Symbols for consistent output
+// Symbols — monochrome Unicode only, no emoji
 export const symbols = {
   check: "✓",
   cross: "✗",
   arrow: "→",
   bullet: "•",
   warning: "▲",
-  pin: "📍",
-  person: "👤",
-  key: "🔑",
-  email: "📧",
-  link: "🔗",
-  lock: "🔐",
-  branch: "🌿",
-  search: "🔍",
-  clipboard: "📋",
+  pin: "◆",
+  person: "●",
+  key: "⚷",
+  email: "✉",
+  link: "⤷",
+  lock: "◈",
+  branch: "⎇",
+  search: "⊙",
+  clipboard: "❐",
 };
 
 // Color helpers
