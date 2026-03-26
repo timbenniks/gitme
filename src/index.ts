@@ -19,8 +19,9 @@ import { findRepoInRegistry, loadRegistry } from "./lib/registry";
 import { findRepoRoot, getRemoteURL, getBranch, getTrackingBranch } from "./lib/git";
 import { selectProfile } from "./lib/prompts";
 import { setupRepoForProfile } from "./lib/repoSetup";
-import { bold, dim, symbols } from "./lib/ui";
-import { getBanner, printWelcome, printLogo } from "./lib/brand";
+import { bold, dim, symbols, identityBox } from "./lib/ui";
+import { getBanner, printWelcomeAnimated, printLogo } from "./lib/brand";
+import { gigiSays } from "./lib/gigi";
 import { unwrap } from "./lib/cancel";
 
 const program = new Command();
@@ -53,7 +54,7 @@ program.action(async () => {
   checkDependencies();
 
   if (!configExists() || !hasProfiles()) {
-    printWelcome();
+    await printWelcomeAnimated();
     await runFirstTimeSetup();
     return;
   }
@@ -89,11 +90,15 @@ function showDashboard(
     branchInfo += ` \u2190 ${tracking}`;
   }
 
-  clack.log.info(
-    `${symbols.pin} ${bold(repoName)}\n` +
-      `  ${symbols.person}  ${profileName} (${profile?.gitEmail || "unknown"})\n` +
-      `  ${symbols.branch}  ${branchInfo}`,
+  console.log(
+    identityBox(
+      `${symbols.pin} ${bold(repoName)}\n` +
+        `${symbols.person}  ${profileName} (${profile?.gitEmail || "unknown"})\n` +
+        `${symbols.branch}  ${branchInfo}`,
+    ),
   );
+
+  clack.log.message(gigiSays());
 
   clack.log.message(
     dim(
@@ -175,10 +180,13 @@ async function showHubMenu(): Promise<void> {
       break;
   }
 
-  clack.outro("Done");
+  clack.outro(gigiSays());
 }
 
 export function run(): void {
-  printLogo();
+  // Skip logo on first-run — the animated welcome will show instead
+  if (configExists() && hasProfiles()) {
+    printLogo();
+  }
   program.parse();
 }

@@ -17,6 +17,7 @@ import {
 } from "../lib/ssh";
 import { setupRepoForProfile } from "../lib/repoSetup";
 import { dim, symbols, tildify } from "../lib/ui";
+import { gigiCelebrates } from "../lib/gigi";
 import { getBanner } from "../lib/brand";
 import { checkDependencies } from "../lib/preflight";
 import { validateProfileName, validateOrgName } from "../lib/validate";
@@ -248,7 +249,7 @@ export async function runFirstTimeSetup(): Promise<void> {
   }
 
   printSummary(config);
-  clack.outro("Gigi says: you're all set! Happy committing.");
+  clack.outro(gigiCelebrates());
 }
 
 export async function runExistingSetup(): Promise<void> {

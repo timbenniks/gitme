@@ -1,4 +1,5 @@
 import pc from "picocolors";
+import boxen from "boxen";
 
 // Symbols — monochrome Unicode only, no emoji
 export const symbols = {
@@ -74,4 +75,13 @@ export function table(headers: string[], rows: string[][]): string {
   );
 
   return ["  " + headerLine, ...dataLines.map((l) => "  " + l)].join("\n");
+}
+
+// Boxed identity card for whoami / dashboard
+export function identityBox(content: string): string {
+  return boxen(content, {
+    padding: { top: 0, bottom: 0, left: 1, right: 1 },
+    borderStyle: "round",
+    borderColor: "gray",
+  });
 }

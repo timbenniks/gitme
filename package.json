@@ -1,6 +1,6 @@
 {
   "name": "@timbenniks/gitme",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Multi-account GitHub CLI — manage SSH keys, git identities, and GitHub auth per repo",
   "keywords": [
     "cli",
@@ -43,10 +43,13 @@
   },
   "dependencies": {
     "@clack/prompts": "^1.1.0",
+    "boxen": "^8.0.1",
     "commander": "^14.0.3",
+    "gradient-string": "^3.0.0",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
+    "@types/gradient-string": "^1.1.6",
     "@types/node": "^25.5.0",
     "@vitest/coverage-v8": "^4.1.1",
     "tsx": "^4.21.0",

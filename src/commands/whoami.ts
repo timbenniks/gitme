@@ -3,7 +3,8 @@ import fs from "node:fs";
 import * as clack from "@clack/prompts";
 import { findRepoRoot, getRemoteURL, getLocalConfig } from "../lib/git";
 import { resolveProfile } from "../lib/profile";
-import { symbols, success, warn, tildify, bold } from "../lib/ui";
+import { symbols, success, warn, tildify, bold, identityBox } from "../lib/ui";
+import { gigiSays } from "../lib/gigi";
 import path from "node:path";
 
 export function registerWhoami(program: Command): void {
@@ -55,6 +56,7 @@ export function registerWhoami(program: Command): void {
         lines.push(`${symbols.link} Remote:      ${remote}`);
       }
 
-      clack.log.info(lines.join("\n"));
+      console.log(identityBox(lines.join("\n")));
+      clack.log.message(gigiSays());
     });
 }
