@@ -59,7 +59,7 @@ export async function runFirstTimeSetup(): Promise<void> {
     if (scan.ghUsernames.length > 0) {
       lines.push(`gh CLI auth: ${scan.ghUsernames.join(", ")}`);
     }
-    clack.note(lines.join("\n"), "Found existing configuration");
+    clack.log.info("Found existing configuration:\n" + lines.map((l) => `  ${l}`).join("\n"));
   } else {
     clack.log.info("No existing git configuration found. Let's start fresh!");
   }
@@ -223,7 +223,7 @@ export async function runFirstTimeSetup(): Promise<void> {
         const repoLabel = repo.org && repo.repo ? `${repo.org}/${repo.repo}` : tildify(repo.path);
         return `${tildify(repo.path).padEnd(40)} ${repoLabel.padEnd(30)} ${profileHint}`;
       });
-      clack.note(repoLines.join("\n"), "Discovered repos");
+      clack.log.info("Discovered repos:\n" + repoLines.map((l) => `  ${l}`).join("\n"));
 
       const registerAll = unwrap(
         await clack.confirm({
@@ -384,16 +384,16 @@ async function editProfileInteractive(config: Config): Promise<void> {
   const existing = config.profiles[name];
   if (!existing) return;
 
-  clack.note(
-    [
-      `GitHub username: ${existing.githubUsername}`,
-      `Git name:        ${existing.gitName}`,
-      `Git email:       ${existing.gitEmail}`,
-      `SSH key:         ${tildify(existing.sshKeyPath)}`,
-      `SSH host:        ${existing.sshHost}`,
-      `GitHub token:    ${existing.githubToken ? "configured" : "not set"}`,
-    ].join("\n"),
-    `Profile: ${name}`,
+  clack.log.info(
+    `Profile: ${name}\n` +
+      [
+        `  GitHub username: ${existing.githubUsername}`,
+        `  Git name:        ${existing.gitName}`,
+        `  Git email:       ${existing.gitEmail}`,
+        `  SSH key:         ${tildify(existing.sshKeyPath)}`,
+        `  SSH host:        ${existing.sshHost}`,
+        `  GitHub token:    ${existing.githubToken ? "configured" : "not set"}`,
+      ].join("\n"),
   );
 
   const field = unwrap(
@@ -559,8 +559,8 @@ async function setupSSHKey(profileName: string, email: string): Promise<string> 
     const pubKey = readPublicKey(keyPath);
     const copied = copyToClipboard(pubKey);
 
-    const title = copied ? `${symbols.clipboard} Public key (copied to clipboard)` : "Public key";
-    clack.note(pubKey, title);
+    const label = copied ? `${symbols.clipboard} Public key (copied to clipboard):` : "Public key:";
+    clack.log.info(`${label}\n  ${pubKey}`);
     clack.log.message(
       `${symbols.arrow} Add this key to GitHub: https://github.com/settings/ssh/new`,
     );
@@ -646,12 +646,12 @@ function printSummary(config: Config): void {
     const def = name === config.defaultProfile ? " (default)" : "";
     return `${name.padEnd(14)} ${profile.githubUsername.padEnd(14)} ${profile.gitEmail.padEnd(25)} ${count} repos${def}`;
   });
-  clack.note(profileLines.join("\n"), "Profiles");
+  clack.log.info("Profiles:\n" + profileLines.map((l) => `  ${l}`).join("\n"));
 
   const orgEntries = Object.entries(config.orgMappings);
   if (orgEntries.length > 0) {
     const orgLines = orgEntries.map(([org, profile]) => `${org} ${symbols.arrow} ${profile}`);
-    clack.note(orgLines.join("\n"), "Org mappings");
+    clack.log.info("Org mappings:\n" + orgLines.map((l) => `  ${l}`).join("\n"));
   }
 
   clack.log.message(

@@ -89,12 +89,10 @@ function showDashboard(
     branchInfo += ` \u2190 ${tracking}`;
   }
 
-  clack.note(
-    [
-      `${symbols.person}  ${profileName} (${profile?.gitEmail || "unknown"})`,
-      `${symbols.branch}  ${branchInfo}`,
-    ].join("\n"),
-    `${symbols.pin} ${repoName}`,
+  clack.log.info(
+    `${symbols.pin} ${bold(repoName)}\n` +
+      `  ${symbols.person}  ${profileName} (${profile?.gitEmail || "unknown"})\n` +
+      `  ${symbols.branch}  ${branchInfo}`,
   );
 
   clack.log.message(

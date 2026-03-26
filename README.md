@@ -56,22 +56,19 @@ $ gitme
     ▀█████████████▀  ●
        ▀███▀ ▀███
 
-┌ █◉█─● gitme ─────────────────────────────────────┐
-│                                                    │
-│  ●  Scanning your existing git setup...            │
-│                                                    │
-│  ┌ Found existing configuration ────────────────┐  │
-│  │  Git user:    Gigi Meleon <gigi@example.com>  │  │
-│  │  SSH key:     ~/.ssh/id_ed25519               │  │
-│  │  gh CLI auth: gigimeleon                      │  │
-│  └──────────────────────────────────────────────┘  │
-│                                                    │
-│  ◇  Import this as your first profile?             │
-│  │  > Yes, import as 'personal'                    │
-│  │    Yes, but let me customize it                 │
-│  │    No, start fresh                              │
-│                                                    │
-└────────────────────────────────────────────────────┘
+┌ █◉█─● gitme ──────────────────────────────────────
+
+●  Scanning your existing git setup...
+
+◆  Found existing configuration:
+     Git user:    Gigi Meleon <gigi@example.com>
+     SSH key:     ~/.ssh/id_ed25519
+     gh CLI auth: gigimeleon
+
+◇  Import this as your first profile?
+│  > Yes, import as 'personal'
+│    Yes, but let me customize it
+│    No, start fresh
 ```
 
 ### Step 2: Add a work account
@@ -100,9 +97,8 @@ After importing your personal profile, gitme asks if you want to add another acc
 ●  Generating SSH key...
 ◆  Created: ~/.ssh/gitme_work
 
-┌ 📋 Public key (copied to clipboard) ─────────────┐
-│  ssh-ed25519 AAAAC3Nz... gigi@acme.com            │
-└───────────────────────────────────────────────────┘
+◆  ❐ Public key (copied to clipboard):
+   ssh-ed25519 AAAAC3Nz... gigi@acme.com
 
 →  Add this key to GitHub: https://github.com/settings/ssh/new
 
@@ -136,12 +132,11 @@ gitme scans common directories to find and register your existing repos.
 ●  Scanning for git repos...
 ◆  Found 7 git repos
 
-┌ Discovered repos ──────────────────────────────────────────────────────────┐
-│  ~/work/api-service              acme-corp/api-service       → work        │
-│  ~/work/frontend                 acme-corp/frontend          → work        │
-│  ~/projects/my-site              gigimeleon/my-site           → personal   │
-│  ~/projects/dotfiles             gigimeleon/dotfiles          → personal   │
-└────────────────────────────────────────────────────────────────────────────┘
+◆  Discovered repos:
+     ~/work/api-service              acme-corp/api-service       → work
+     ~/work/frontend                 acme-corp/frontend          → work
+     ~/projects/my-site              gigimeleon/my-site          → personal
+     ~/projects/dotfiles             gigimeleon/dotfiles         → personal
 
 ◇  Register these repos?  Yes
 ◆  Registered 4 repos
@@ -170,12 +165,11 @@ Inside any managed repo, check who you are:
 $ cd ~/work/api-service
 $ gitme whoami
 
-  ┌ 📍 api-service ──────────────────────────────────┐
-  │  👤  work (gigi@acme.com)                         │
-  │  📧  gigi@acme.com                                │
-  │  🔑  ~/.ssh/gitme_work (✓ valid)                  │
-  │  🔗  git@github.com-work:acme-corp/api-service    │
-  └───────────────────────────────────────────────────┘
+  ◆ Repository:  api-service
+  ● Profile:     work
+  ✉ Email:       gigi@acme.com
+  ⚷ SSH key:     ~/.ssh/gitme_work (✓ valid)
+  ⤷ Remote:      git@github.com-work:acme-corp/api-service
 ```
 
 Now every tool — VS Code, terminal, Claude Code, GitHub Desktop — uses the correct identity automatically. **No wrappers. No thinking. It just works.**
@@ -264,13 +258,12 @@ Full CRUD:
 ```
 $ gitme whoami
 
-  ┌ 📍 api-service ──────────────────────────────────┐
-  │  👤  work (gigi@acme.com)                         │
-  │  📧  gigi@acme.com                                │
-  │  🔑  ~/.ssh/gitme_work (✓ valid)                  │
-  │  🔗  git@github.com-work:acme-corp/api-service    │
-  │  🔐  ✓ token configured                           │
-  └───────────────────────────────────────────────────┘
+  ◆ Repository:  api-service
+  ● Profile:     work
+  ✉ Email:       gigi@acme.com
+  ⚷ SSH key:     ~/.ssh/gitme_work (✓ valid)
+  ⤷ Remote:      git@github.com-work:acme-corp/api-service
+  ◈ GitHub API:  ✓ token configured
 ```
 
 ### Pull requests and issues
@@ -310,15 +303,15 @@ $ cd ~/random/some-project
 $ gitme
 
   ▲  This repo isn't managed by gitme yet.
-     🔍 Detected remote: git@github.com:some-org/some-project.git
+     ⊙ Detected remote: git@github.com:some-org/some-project.git
 
   ◇  Set it up now?  Yes
 
   ◇  Which profile?
   │  > work (gigi@acme.com)
 
-  ◆  🔄 Rewriting origin to: git@github.com-work:some-org/some-project.git
-  ◆  📧 Set git user to: Gigi Meleon <gigi@acme.com>
+  ◆  Rewriting origin to: git@github.com-work:some-org/some-project.git
+  ◆  Set git user to: Gigi Meleon <gigi@acme.com>
   ◆  Registered in repo registry.
 ```
 

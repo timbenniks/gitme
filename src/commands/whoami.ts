@@ -55,6 +55,6 @@ export function registerWhoami(program: Command): void {
         lines.push(`${symbols.link} Remote:      ${remote}`);
       }
 
-      clack.note(lines.join("\n"), "Identity");
+      clack.log.info(lines.join("\n"));
     });
 }
