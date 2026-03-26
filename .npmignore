@@ -1,0 +1,13 @@
+src/
+docs/
+coverage/
+.vscode/
+.claude/
+.vite-hooks/
+*.test.ts
+tsconfig.json
+vite.config.ts
+biome.json
+oxlint.json
+AGENTS.md
+.gitignore
