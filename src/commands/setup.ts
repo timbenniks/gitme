@@ -16,8 +16,8 @@ import {
   upsertHostBlock,
 } from "../lib/ssh";
 import { setupRepoForProfile } from "../lib/repoSetup";
-import { dim, symbols, tildify } from "../lib/ui";
-import { gigiCelebrates } from "../lib/gigi";
+import { dim, symbols, tildify, hyperlink } from "../lib/ui";
+import { gigiSparkle } from "../lib/gigi";
 import { getBanner } from "../lib/brand";
 import { checkDependencies } from "../lib/preflight";
 import { validateProfileName, validateOrgName } from "../lib/validate";
@@ -249,7 +249,9 @@ export async function runFirstTimeSetup(): Promise<void> {
   }
 
   printSummary(config);
-  clack.outro(gigiCelebrates());
+  console.log();
+  console.log(gigiSparkle());
+  clack.outro("Happy committing!");
 }
 
 export async function runExistingSetup(): Promise<void> {
@@ -563,7 +565,7 @@ async function setupSSHKey(profileName: string, email: string): Promise<string> 
     const label = copied ? `${symbols.clipboard} Public key (copied to clipboard):` : "Public key:";
     clack.log.info(`${label}\n  ${pubKey}`);
     clack.log.message(
-      `${symbols.arrow} Add this key to GitHub: https://github.com/settings/ssh/new`,
+      `${symbols.arrow} Add this key to GitHub: ${hyperlink("https://github.com/settings/ssh/new")}`,
     );
 
     const openBrowser = unwrap(
@@ -628,7 +630,9 @@ async function askForToken(): Promise<string | null> {
   );
   if (!wantToken) return null;
 
-  clack.log.message(`${symbols.arrow} Create a token at: https://github.com/settings/tokens`);
+  clack.log.message(
+    `${symbols.arrow} Create a token at: ${hyperlink("https://github.com/settings/tokens")}`,
+  );
   clack.log.message(dim("Scopes needed: repo"));
 
   const token = unwrap(await clack.text({ message: "Paste token:" }));

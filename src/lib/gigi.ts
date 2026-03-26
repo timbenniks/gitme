@@ -42,3 +42,11 @@ export function gigiSays(): string {
 export function gigiCelebrates(): string {
   return pc.dim(`~ ${pick(celebrations)}`);
 }
+
+/** Sparkle celebration banner for big moments. */
+export function gigiSparkle(): string {
+  const msg = pick(celebrations);
+  const sparkle = pc.dim("  \u30FB\uFF9F\u2727  \u30FB\uFF9F\u2727  \u30FB\uFF9F\u2727");
+  const star = pc.yellow("\u2728");
+  return [sparkle, `  ${star}  ${pc.bold(msg)}  ${star}`, sparkle].join("\n");
+}

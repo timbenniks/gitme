@@ -7,8 +7,8 @@ import { loadConfig, saveConfig } from "../lib/config";
 import { registerRepo } from "../lib/registry";
 import { selectProfile } from "../lib/prompts";
 import { parseURL, toSSH } from "../lib/url";
-import { symbols } from "../lib/ui";
-import { gigiCelebrates } from "../lib/gigi";
+import { symbols, profileBadge } from "../lib/ui";
+import { gigiSparkle } from "../lib/gigi";
 import { unwrap } from "../lib/cancel";
 
 export function registerClone(program: Command): void {
@@ -100,8 +100,9 @@ export function registerClone(program: Command): void {
         repo: parsed.repo,
       });
 
-      clack.log.success(`Cloned as '${profileName}' (${profile.gitEmail})`);
+      clack.log.success(`Cloned as ${profileBadge(profileName)} (${profile.gitEmail})`);
       clack.log.success("Registered in repo registry");
-      clack.log.message(gigiCelebrates());
+      console.log();
+      console.log(gigiSparkle());
     });
 }

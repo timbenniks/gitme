@@ -4,7 +4,7 @@ import { findRepoRoot, getRemoteURL } from "./git";
 import { getProfileNames } from "./config";
 import { resolveProfile } from "./profile";
 import { parseURL } from "./url";
-import { dim } from "./ui";
+import { dim, hyperlink } from "./ui";
 
 export interface RepoContext {
   repoRoot: string;
@@ -37,7 +37,7 @@ export function getRepoContext(): RepoContext | null {
   if (!profile.githubToken) {
     clack.log.warn("No GitHub token configured for this profile.");
     clack.log.message(dim("Run gitme setup to add a personal access token."));
-    clack.log.message(dim("Create one at: https://github.com/settings/tokens"));
+    clack.log.message(dim(`Create one at: ${hyperlink("https://github.com/settings/tokens")}`));
     return null;
   }
 

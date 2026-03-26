@@ -3,7 +3,7 @@ import fs from "node:fs";
 import * as clack from "@clack/prompts";
 import { findRepoRoot, getRemoteURL, getLocalConfig } from "../lib/git";
 import { resolveProfile } from "../lib/profile";
-import { symbols, success, warn, tildify, bold, identityBox } from "../lib/ui";
+import { symbols, success, warn, tildify, bold, identityBox, profileBadge } from "../lib/ui";
 import { gigiSays } from "../lib/gigi";
 import path from "node:path";
 
@@ -41,7 +41,7 @@ export function registerWhoami(program: Command): void {
           ? success("token configured")
           : "not configured";
 
-        lines.push(`${symbols.person} Profile:     ${bold(profileName)}`);
+        lines.push(`${symbols.person} Profile:     ${profileBadge(profileName)}`);
         lines.push(`${symbols.email} Email:       ${localEmail || profile.gitEmail}`);
         lines.push(`${symbols.name} Name:        ${localName || profile.gitName}`);
         lines.push(

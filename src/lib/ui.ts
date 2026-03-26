@@ -85,3 +85,32 @@ export function identityBox(content: string): string {
     borderColor: "gray",
   });
 }
+
+// Deterministic color badge for profile names
+const profileColors: Array<(s: string) => string> = [
+  pc.green,
+  pc.cyan,
+  pc.magenta,
+  pc.yellow,
+  pc.blue,
+  pc.red,
+];
+
+function hashString(s: string): number {
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) {
+    hash = ((hash << 5) - hash + s.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+export function profileBadge(name: string): string {
+  const colorFn = profileColors[hashString(name) % profileColors.length] as (s: string) => string;
+  return pc.bold(colorFn(name));
+}
+
+// Terminal hyperlink (OSC 8) — clickable in iTerm2, Wezterm, modern terminals
+export function hyperlink(url: string, text?: string): string {
+  const display = text || url;
+  return `\x1b]8;;${url}\x1b\\${display}\x1b]8;;\x1b\\`;
+}

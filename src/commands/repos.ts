@@ -4,7 +4,7 @@ import fs from "node:fs";
 import * as clack from "@clack/prompts";
 import { loadRegistry, saveRegistry, unregisterRepo } from "../lib/registry";
 import { findRepoRoot } from "../lib/git";
-import { table, tildify, relativeTime, dim } from "../lib/ui";
+import { table, tildify, relativeTime, dim, profileBadge } from "../lib/ui";
 import { unwrap } from "../lib/cancel";
 
 export function listRepos(profileFilter?: string): void {
@@ -23,7 +23,12 @@ export function listRepos(profileFilter?: string): void {
   const headers: string[] = ["PROFILE", "REPO", "PATH", "CLONED"];
   const rows: string[][] = entries.map(([absPath, e]) => {
     const repoLabel: string = e.org && e.repo ? `${e.org}/${e.repo}` : absPath;
-    return [e.profile, repoLabel, tildify(absPath), e.clonedAt ? relativeTime(e.clonedAt) : ""];
+    return [
+      profileBadge(e.profile),
+      repoLabel,
+      tildify(absPath),
+      e.clonedAt ? relativeTime(e.clonedAt) : "",
+    ];
   });
 
   clack.log.message(table(headers, rows));

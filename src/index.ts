@@ -19,7 +19,7 @@ import { findRepoInRegistry, loadRegistry } from "./lib/registry";
 import { findRepoRoot, getRemoteURL, getBranch, getTrackingBranch } from "./lib/git";
 import { selectProfile } from "./lib/prompts";
 import { setupRepoForProfile } from "./lib/repoSetup";
-import { bold, dim, symbols, identityBox } from "./lib/ui";
+import { bold, dim, symbols, identityBox, profileBadge } from "./lib/ui";
 import { getBanner, printWelcomeAnimated, printLogo } from "./lib/brand";
 import { gigiSays } from "./lib/gigi";
 import { unwrap } from "./lib/cancel";
@@ -93,7 +93,7 @@ function showDashboard(
   console.log(
     identityBox(
       `${symbols.pin} ${bold(repoName)}\n` +
-        `${symbols.person}  ${profileName} (${profile?.gitEmail || "unknown"})\n` +
+        `${symbols.person}  ${profileBadge(profileName)} (${profile?.gitEmail || "unknown"})\n` +
         `${symbols.branch}  ${branchInfo}`,
     ),
   );

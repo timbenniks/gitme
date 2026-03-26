@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import * as clack from "@clack/prompts";
 import { loadConfig } from "../lib/config";
 import { loadRegistry } from "../lib/registry";
-import { table } from "../lib/ui";
+import { table, profileBadge } from "../lib/ui";
 
 export function listProfiles(): void {
   const config = loadConfig();
@@ -24,7 +24,7 @@ export function listProfiles(): void {
     const p = config.profiles[name];
     if (!p) return [name, "", "", "0", ""];
     return [
-      name,
+      profileBadge(name),
       p.githubUsername || "",
       p.gitEmail || "",
       String(repoCounts[name] ?? 0),

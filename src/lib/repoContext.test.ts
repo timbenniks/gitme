@@ -20,6 +20,7 @@ vi.mock("@clack/prompts", () => ({
 }));
 vi.mock("./ui", () => ({
   dim: (s: string) => s,
+  hyperlink: (url: string, text?: string) => text || url,
 }));
 vi.mock("./config", () => ({
   getProfileNames: vi.fn(() => ["personal", "work"]),
