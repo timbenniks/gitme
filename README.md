@@ -61,9 +61,9 @@ $ gitme
 │  ●  Scanning your existing git setup...            │
 │                                                    │
 │  ┌ Found existing configuration ────────────────┐  │
-│  │  Git user:    Tim Benniks <tim@gmail.com>     │  │
+│  │  Git user:    Gigi Meleon <gigi@example.com>  │  │
 │  │  SSH key:     ~/.ssh/id_ed25519               │  │
-│  │  gh CLI auth: tbenniks                        │  │
+│  │  gh CLI auth: gigimeleon                      │  │
 │  └──────────────────────────────────────────────┘  │
 │                                                    │
 │  ◇  Import this as your first profile?             │
@@ -86,13 +86,13 @@ After importing your personal profile, gitme asks if you want to add another acc
 │  work
 
 ◇  GitHub username:
-│  tim-acme
+│  gigi-at-acme
 
 ◇  Full name for commits:
-│  Tim Benniks
+│  Gigi Meleon
 
 ◇  Email for commits:
-│  tim@acme.com
+│  gigi@acme.com
 
 ◇  SSH key for this profile:
 │  > Generate a new key
@@ -101,7 +101,7 @@ After importing your personal profile, gitme asks if you want to add another acc
 ◆  Created: ~/.ssh/gitme_work
 
 ┌ 📋 Public key (copied to clipboard) ─────────────┐
-│  ssh-ed25519 AAAAC3Nz... tim@acme.com             │
+│  ssh-ed25519 AAAAC3Nz... gigi@acme.com            │
 └───────────────────────────────────────────────────┘
 
 →  Add this key to GitHub: https://github.com/settings/ssh/new
@@ -110,7 +110,7 @@ After importing your personal profile, gitme asks if you want to add another acc
 ◇  Have you added the key to GitHub?  Yes
 
 ●  Testing ssh -T git@github.com-work...
-◆  Authenticated as tim-acme
+◆  Authenticated as gigi-at-acme
 ```
 
 ### Step 3: Map organizations
@@ -122,7 +122,7 @@ Tell gitme which GitHub orgs belong to which profile. This enables automatic pro
 │  Yes
 
 ◇  Map an org to 'personal':
-│  tbenniks
+│  gigimeleon
 
 ◇  Map an org to 'work':
 │  acme-corp
@@ -139,8 +139,8 @@ gitme scans common directories to find and register your existing repos.
 ┌ Discovered repos ──────────────────────────────────────────────────────────┐
 │  ~/work/api-service              acme-corp/api-service       → work        │
 │  ~/work/frontend                 acme-corp/frontend          → work        │
-│  ~/projects/my-site              tbenniks/my-site            → personal    │
-│  ~/projects/dotfiles             tbenniks/dotfiles           → personal    │
+│  ~/projects/my-site              gigimeleon/my-site           → personal   │
+│  ~/projects/dotfiles             gigimeleon/dotfiles          → personal   │
 └────────────────────────────────────────────────────────────────────────────┘
 
 ◇  Register these repos?  Yes
@@ -158,7 +158,7 @@ $ gitme clone git@github.com:acme-corp/new-service.git
 
   ◆  Detected org: acme-corp → profile 'work'
   ●  Cloning acme-corp/new-service...
-  ◆  Cloned as 'work' (tim@acme.com)
+  ◆  Cloned as 'work' (gigi@acme.com)
   ◆  Registered in repo registry
 ```
 
@@ -171,8 +171,8 @@ $ cd ~/work/api-service
 $ gitme whoami
 
   ┌ 📍 api-service ──────────────────────────────────┐
-  │  👤  work (tim@acme.com)                          │
-  │  📧  tim@acme.com                                 │
+  │  👤  work (gigi@acme.com)                         │
+  │  📧  gigi@acme.com                                │
   │  🔑  ~/.ssh/gitme_work (✓ valid)                  │
   │  🔗  git@github.com-work:acme-corp/api-service    │
   └───────────────────────────────────────────────────┘
@@ -191,9 +191,9 @@ A profile is a named GitHub identity: username, name, email, SSH key, and option
 ```
 $ gitme profiles
 
-  PROFILE     USERNAME    EMAIL                  REPOS  DEFAULT
-  personal    tbenniks    tbenniks@gmail.com     5      ✓
-  work        tim-acme    tim@acme.com           8
+  PROFILE     USERNAME       EMAIL                  REPOS  DEFAULT
+  personal    gigimeleon     gigi@example.com       5      ✓
+  work        gigi-at-acme   gigi@acme.com          8
 ```
 
 Full CRUD:
@@ -212,7 +212,7 @@ $ gitme clone git@github.com:acme-corp/api-service.git
 
   ◆  Detected org: acme-corp → profile 'work'
   ●  Cloning acme-corp/api-service...
-  ◆  Cloned as 'work' (tim@acme.com)
+  ◆  Cloned as 'work' (gigi@acme.com)
   ◆  Registered in repo registry
 ```
 
@@ -228,7 +228,7 @@ $ gitme repos
   PROFILE     REPO                          PATH                       CLONED
   work        acme-corp/api-service         ~/work/api-service         2 days ago
   work        acme-corp/frontend            ~/work/frontend            1 day ago
-  personal    tbenniks/my-site              ~/personal/my-site         2 weeks ago
+  personal    gigimeleon/my-site            ~/personal/my-site         2 weeks ago
 
   3 repos across 2 profiles
 ```
@@ -250,7 +250,7 @@ $ gitme config org list
 
   ORG          PROFILE
   acme-corp    work
-  tbenniks     personal
+  gigimeleon   personal
 ```
 
 Full CRUD:
@@ -265,8 +265,8 @@ Full CRUD:
 $ gitme whoami
 
   ┌ 📍 api-service ──────────────────────────────────┐
-  │  👤  work (tim@acme.com)                          │
-  │  📧  tim@acme.com                                 │
+  │  👤  work (gigi@acme.com)                         │
+  │  📧  gigi@acme.com                                │
   │  🔑  ~/.ssh/gitme_work (✓ valid)                  │
   │  🔗  git@github.com-work:acme-corp/api-service    │
   │  🔐  ✓ token configured                           │
@@ -315,10 +315,10 @@ $ gitme
   ◇  Set it up now?  Yes
 
   ◇  Which profile?
-  │  > work (tim@acme.com)
+  │  > work (gigi@acme.com)
 
   ◆  🔄 Rewriting origin to: git@github.com-work:some-org/some-project.git
-  ◆  📧 Set git user to: Tim Benniks <tim@acme.com>
+  ◆  📧 Set git user to: Gigi Meleon <gigi@acme.com>
   ◆  Registered in repo registry.
 ```
 
@@ -407,7 +407,7 @@ When gitme needs to determine the active profile for the current directory:
 
 ### Config files
 
-All config lives in `~/.gitme/`:
+All config lives in `~/.gitme/` (permissions: `0700` directory, `0600` files):
 
 ```
 ~/.gitme/
@@ -425,9 +425,9 @@ Nothing is written inside your repos. Portable, backupable, scriptable.
   "defaultProfile": "personal",
   "profiles": {
     "personal": {
-      "githubUsername": "tbenniks",
-      "gitName": "Tim Benniks",
-      "gitEmail": "tbenniks@gmail.com",
+      "githubUsername": "gigimeleon",
+      "gitName": "Gigi Meleon",
+      "gitEmail": "gigi@example.com",
       "sshKeyPath": "~/.ssh/gitme_personal",
       "sshHost": "github.com-personal",
       "githubToken": null
@@ -435,7 +435,7 @@ Nothing is written inside your repos. Portable, backupable, scriptable.
   },
   "orgMappings": {
     "acme-corp": "work",
-    "tbenniks": "personal"
+    "gigimeleon": "personal"
   }
 }
 ```
