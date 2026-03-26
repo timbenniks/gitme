@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vite-plus/test";
-import { tildify, relativeTime, table } from "./ui";
+import { tildify, relativeTime, table, identityBox, profileBadge, hyperlink } from "./ui";
 
 describe("tildify", () => {
   const originalHome = process.env.HOME;
@@ -81,7 +81,8 @@ describe("table", () => {
     const output = table(headers, rows);
     const lines = output.split("\n");
 
-    expect(lines).toHaveLength(3);
+    // header + rule + 2 data rows
+    expect(lines).toHaveLength(4);
     // Each line starts with 2-space indent
     for (const line of lines) {
       expect(line.startsWith("  ")).toBe(true);
@@ -91,6 +92,88 @@ describe("table", () => {
   it("handles empty rows", () => {
     const output = table(["COL"], []);
     const lines = output.split("\n");
-    expect(lines).toHaveLength(1);
+    // header + rule, no data rows
+    expect(lines).toHaveLength(2);
+  });
+
+  it("handles ANSI-colored cells without breaking alignment", () => {
+    const colored = profileBadge("work");
+    const headers = ["PROFILE", "VALUE"];
+    const rows = [
+      [colored, "test"],
+      ["plain", "data"],
+    ];
+    const output = table(headers, rows);
+    const lines = output.split("\n");
+    // header + rule + 2 data rows
+    expect(lines).toHaveLength(4);
+    // Contains separator character
+    expect(output).toContain("\u2502");
+  });
+
+  it("contains rule line with box-drawing characters", () => {
+    const output = table(["A", "B"], [["1", "2"]]);
+    const lines = output.split("\n");
+    // Second line is the rule
+    expect(lines[1]).toContain("\u2500");
+    expect(lines[1]).toContain("\u253c");
+  });
+});
+
+describe("identityBox", () => {
+  it("wraps content in a rounded box", () => {
+    const result = identityBox("hello");
+    expect(result).toContain("hello");
+    // Rounded corners
+    expect(result).toContain("\u256D");
+    expect(result).toContain("\u256E");
+    expect(result).toContain("\u256F");
+    expect(result).toContain("\u2570");
+  });
+
+  it("handles multi-line content", () => {
+    const result = identityBox("line1\nline2");
+    expect(result).toContain("line1");
+    expect(result).toContain("line2");
+  });
+});
+
+describe("profileBadge", () => {
+  it("returns a string containing the profile name", () => {
+    const badge = profileBadge("personal");
+    expect(badge).toContain("personal");
+  });
+
+  it("is deterministic for the same name", () => {
+    const a = profileBadge("work");
+    const b = profileBadge("work");
+    expect(a).toBe(b);
+  });
+
+  it("contains the name even for various inputs", () => {
+    for (const name of ["personal", "work", "freelance", "oss", "client-x"]) {
+      expect(profileBadge(name)).toContain(name);
+    }
+  });
+});
+
+describe("hyperlink", () => {
+  it("wraps URL in OSC 8 escape sequence", () => {
+    const result = hyperlink("https://example.com");
+    expect(result).toContain("https://example.com");
+    expect(result).toContain("\x1b]8;;");
+  });
+
+  it("uses custom display text when provided", () => {
+    const result = hyperlink("https://example.com", "Click here");
+    expect(result).toContain("Click here");
+    expect(result).toContain("https://example.com");
+  });
+
+  it("uses URL as display text when no text provided", () => {
+    const result = hyperlink("https://example.com");
+    // URL appears as both the link target and display text
+    const occurrences = result.split("https://example.com").length - 1;
+    expect(occurrences).toBeGreaterThanOrEqual(2);
   });
 });

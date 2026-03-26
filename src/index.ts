@@ -14,6 +14,7 @@ import { registerConfig, listOrgMappings } from "./commands/config";
 import { registerSetup, runFirstTimeSetup, runExistingSetup } from "./commands/setup";
 import { registerPR } from "./commands/pr";
 import { registerIssue } from "./commands/issue";
+import { registerGigi } from "./commands/gigi";
 import { configExists, hasProfiles, loadConfig } from "./lib/config";
 import { findRepoInRegistry, loadRegistry } from "./lib/registry";
 import { findRepoRoot, getRemoteURL, getBranch, getTrackingBranch } from "./lib/git";
@@ -46,6 +47,7 @@ registerConfig(program);
 registerSetup(program);
 registerPR(program);
 registerIssue(program);
+registerGigi(program);
 
 // Context-aware default action (bare `gitme` with no subcommand)
 program.action(async () => {
@@ -184,8 +186,10 @@ async function showHubMenu(): Promise<void> {
 }
 
 export function run(): void {
-  // Skip logo on first-run — the animated welcome will show instead
-  if (configExists() && hasProfiles()) {
+  // Only show logo for bare `gitme` (no subcommand), and skip on first-run
+  const args = process.argv.slice(2);
+  const hasSubcommand = args.length > 0 && !args[0]?.startsWith("-");
+  if (!hasSubcommand && configExists() && hasProfiles()) {
     printLogo();
   }
   program.parse();

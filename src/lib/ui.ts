@@ -61,20 +61,35 @@ export function relativeTime(date: string | Date): string {
   return "just now";
 }
 
-// Simple table formatter with padded columns
+// Strip ANSI escape codes for accurate visible-width measurement
+// eslint-disable-next-line no-control-regex
+const ANSI_RE = new RegExp("\u001b\\[[0-9;]*m|\u001b\\]8;;[^\u001b]*\u001b\\\\", "g");
+function visLen(s: string): number {
+  return s.replace(ANSI_RE, "").length;
+}
+
+function padVisible(s: string, width: number): string {
+  const diff = width - visLen(s);
+  return diff > 0 ? s + " ".repeat(diff) : s;
+}
+
+// Styled table with box-drawing borders
 export function table(headers: string[], rows: string[][]): string {
   const allRows = [headers, ...rows];
   const colWidths = headers.map((_, i) =>
-    Math.max(...allRows.map((row) => String(row[i] || "").length)),
+    Math.max(...allRows.map((row) => visLen(String(row[i] || "")))),
   );
 
-  const headerLine = headers.map((h, i) => pc.dim(String(h).padEnd(colWidths[i] ?? 0))).join("  ");
-
+  const sep = pc.dim(" \u2502 ");
+  const headerLine = headers.map((h, i) => pc.dim(padVisible(h, colWidths[i] ?? 0))).join(sep);
+  const rule = pc.dim(
+    " " + colWidths.map((w) => "\u2500".repeat(w)).join("\u2500\u253c\u2500") + " ",
+  );
   const dataLines = rows.map((row) =>
-    row.map((cell, i) => String(cell || "").padEnd(colWidths[i] ?? 0)).join("  "),
+    row.map((cell, i) => padVisible(String(cell || ""), colWidths[i] ?? 0)).join(sep),
   );
 
-  return ["  " + headerLine, ...dataLines.map((l) => "  " + l)].join("\n");
+  return ["  " + headerLine, "  " + rule, ...dataLines.map((l) => "  " + l)].join("\n");
 }
 
 // Boxed identity card for whoami / dashboard
