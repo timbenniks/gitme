@@ -20,7 +20,7 @@ import { findRepoRoot, getRemoteURL, getBranch, getTrackingBranch } from "./lib/
 import { selectProfile } from "./lib/prompts";
 import { setupRepoForProfile } from "./lib/repoSetup";
 import { bold, dim, symbols } from "./lib/ui";
-import { getBanner, printWelcome } from "./lib/brand";
+import { getBanner, printWelcome, printLogo } from "./lib/brand";
 import { unwrap } from "./lib/cancel";
 
 const program = new Command();
@@ -32,7 +32,7 @@ program
   )
   .version("0.1.0")
   .option("--verbose", "Show detailed output for debugging")
-  .addHelpText("beforeAll", getBanner() + "\n");
+  .addHelpText("beforeAll", "");
 
 // Register commands (for direct CLI use: gitme <command>)
 registerWhoami(program);
@@ -179,5 +179,6 @@ async function showHubMenu(): Promise<void> {
 }
 
 export function run(): void {
+  printLogo();
   program.parse();
 }
